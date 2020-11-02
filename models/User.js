@@ -7,15 +7,24 @@ const skillsSchema = new mongoose.Schema({
 
 const ratingSchema = new mongoose.Schema({
   rating: Number,
-  jobId: mongoose.Types.ObjectId, //add a ref //////////////////////////////////////////////// 
+  jobId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Job'
+  } //add a ref //////////////////////////////////////////////// 
 });
 
 const savedJobsSchema = new mongoose.Schema({
-  jobPostId: mongoose.Types.ObjectId, // add a ref ///////////////////////////////////////////
+  jobPostId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Job',
+  } // add a ref ///////////////////////////////////////////
 });
 
 const appliedJobs = new mongoose.Schema({ 
-  jobPostId: mongoose.Types.ObjectId, // add a ref ///////////////////////////////////////////
+  jobPostId: {
+    type:mongoose.Types.ObjectId,
+    ref: 'Job'
+  }, // add a ref ///////////////////////////////////////////
   status: { //pending accepted rejected
     type: String, 
     default: 'pending'
@@ -73,4 +82,7 @@ const userSchema = new mongoose.Schema({
     type: [appliedJobs],
   }
 
-}, {timestamps: true})
+}, {timestamps: true});
+
+const User = mongoose.model('User', userSchema);
+module.exports = User;

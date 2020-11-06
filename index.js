@@ -16,9 +16,9 @@ mongoose.connect(dbURI,
   { useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useFindAndModify: false, 
-    useCreateIndex: true })
+    useCreateIndex: true,})
     .then((result) => {
-      console.log("connected to the server");
+      console.log("connected to the database");
       app.listen(3001, () => console.log("server started"));
     })
     .catch((err) => console.log(`${err.message} ${err.code}`));

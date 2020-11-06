@@ -2,7 +2,7 @@ export const Privileges = {
   user: {
     deleteUser: 'deleteUser',
     editSelectedUser:'editSelectedUser',
-    changeDissableStatus: 'changeDissableStatus',
+    changeDissableUserStatus: 'changeDissable:UserStatus',
     verifyUser: 'verifyUser',
   },
   job: {

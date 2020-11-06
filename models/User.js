@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { isEmail } = require('validator');
+const bcript = require('bcrypt');
 
 const skillsSchema = new mongoose.Schema({
   category: String,
@@ -35,19 +37,33 @@ const appliedJobs = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
   name: {//intial login & update
     type: String,
-    required: true,
+    required: [true, 'Name is required'],
     trim: true
+  },
+  email: {
+    type: String,
+    unique: true,
+    validate: [isEmail, 'Please enter a valid email']
+  },
+  password: {
+    type: String,
+    minlength: [6, 'Minimum password length is 6 charactors']
+  },
+  role: {
+    type: String,
+    default: 'basic',
+    ref: 'Role'
   },
   proPic: {//initial login & update
     type: String,
   },
   location: {// initial login & update
     type: String,
-    required: true
+    required: [true, 'Locaton is required']
   },
   contactNo: {// initial login
-    type: Number,
-    required: true,
+    type: String,
+    required: [true, 'Contact number is required'],
     unique: true
   },
   activeStatus: {
@@ -72,23 +88,52 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  workCount: {
+    type: Number,
+    default: 0
+  },
   skills: {
     type: [skillsSchema],
+    default: []
   },
   providerRating: {
     type: [ratingSchema],
+    default: []
   },
   seekerRating: {
     type: [ratingSchema],
+    default: []
   },
   savedJobPosts: {
     type: [savedJobsSchema],
+    default: []
   },
   appliedJobs: {
     type: [appliedJobs],
+    default: []
   }
 
 }, {timestamps: true});
+
+userSchema.pre('save', async function (next) {
+  if (this.password) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  next();
+})
+
+userSchema.static.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error('incorrect password');
+  }
+  throw Error('incorrect email');
+}
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

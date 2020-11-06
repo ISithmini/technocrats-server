@@ -10,7 +10,8 @@ const ratingSchema = new mongoose.Schema({
   jobId: {
     type: mongoose.Types.ObjectId,
     ref: 'Job'
-  } //add a ref //////////////////////////////////////////////// 
+  },
+  review: String //add a ref //////////////////////////////////////////////// 
 });
 
 const savedJobsSchema = new mongoose.Schema({
@@ -32,37 +33,42 @@ const appliedJobs = new mongoose.Schema({
 })
 
 const userSchema = new mongoose.Schema({
-  name: {
+  name: {//intial login & update
     type: String,
     required: true,
     trim: true
   },
-  proPic: {
+  proPic: {//initial login & update
     type: String,
   },
-  location: {
+  location: {// initial login & update
     type: String,
     required: true
   },
-  contactNo: {
+  contactNo: {// initial login
     type: Number,
-    required: true
+    required: true,
+    unique: true
   },
   activeStatus: {
     type: Date
   },
-  bio: {
+  bio: {// initial login & update
     type: String,
   },
   level: {
     type: Number,
     default: 1
   },
+  isDissable: {// put this true when a user under examin for some policy issue
+    type: Boolean,
+    default: false
+  },
   verifyStatus: {
     type: Boolean,
     default: false
   },
-  jobsCount: {
+  jobsCount: {// update on post job and delete
     type: Number,
     default: 0
   },

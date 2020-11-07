@@ -1,8 +1,8 @@
 export const Privileges = {
   user: {
-    deleteUser: 'deleteUser',
+    deleteUsers: 'deleteUsers',
     editSelectedUser:'editSelectedUser',
-    changeDissableUserStatus: 'changeDissable:UserStatus',
+    changeDissableUserStatus: 'changeDissableUserStatus',
     verifyUser: 'verifyUser',
   },
   job: {

@@ -1,12 +1,14 @@
 const Role = require('../../models/Role');
+const { getJwtInfo } = require('../../services/Authentication');
 const roleErrorHandler = require('../../services/Error/roleErrorHandler');
 
 //////////////////////////////////// GET A ROLE ////////////////////////////////////////////
 
 const getRole = async (req, res) => {
   try {
-    console.log(req.params.rolename);
-    const role = await Role.findOne({ title: req.params.rolename});
+    const { role } = getJwtInfo(req);
+    console.log(role);
+    const role = await Role.findOne({ title: role});
     res.status(400).json(role);
   } catch (error) {
     res.status(400).json({ errors: { message: "something went wrong" }});

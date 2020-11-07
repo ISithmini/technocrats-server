@@ -1,11 +1,21 @@
 const mongoose = require('mongoose');
 
+const privilegeSchema = mongoose.Schema({
+  resource: {
+    type: String,
+    unique: true
+  },
+  permissions: [String]
+})
+
 const roleSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
+    unique: true,
+    trim: true,
   },
-  privileges: [String]
+  privileges: [privilegeSchema]
 });
 
 const Role = mongoose.model('Role', roleSchema);

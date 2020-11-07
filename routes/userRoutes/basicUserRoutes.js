@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const basicUserControllers = require('../../Controllers/userControllers/basicUserControllers')
+const basicUserControllers = require('../../Controllers/userControllers/basicUserControllers');
+const { createJwt, checkPermission } = require('../../services/Authentication');
 
+router.get('/hello', checkPermission('user', 'verifyUser') ,(req, res) => {
+  
+    res.status(201).json('hello')
+})
 
 router.post('/signup', basicUserControllers.createAccount); //create account
 

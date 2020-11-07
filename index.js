@@ -16,8 +16,11 @@ app.use(cookieParser());
 
 //Import router
 const userRoutes = require('./routes/userRoutes/basicUserRoutes');
+const roleRoutes = require('./routes/roleRoutes/roleRoutes');
+//const { createAdmin } = require('./Controllers/roleControllers/roleController');
 
 app.use('/user', userRoutes);
+app.use('/role', roleRoutes);
 
 
 mongoose.connect(dbURI, 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const basicUserControllers = require('../../Controllers/userControllers/basicUserControllers');
-const { createJwt, checkPermission } = require('../../services/Authentication');
+const { checkPermission } = require('../../services/Authentication');
 
 router.get('/hello', checkPermission('user', 'verifyUser') ,(req, res) => {
   
@@ -10,7 +10,7 @@ router.get('/hello', checkPermission('user', 'verifyUser') ,(req, res) => {
 
 router.post('/signup', basicUserControllers.createAccount); //create account
 
-router.post('/login', ()=>{}); //login
+router.post('/login', basicUserControllers.loginAccount); //login
 
 router.patch('/editaccount', ()=>{}); //edit account
 

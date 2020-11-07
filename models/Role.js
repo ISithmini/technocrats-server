@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const privilegeSchema = mongoose.Schema({
   resource: {
     type: String,
-    unique: true
   },
   permissions: [String]
 })

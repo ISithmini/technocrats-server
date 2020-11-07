@@ -8,6 +8,9 @@ const advertisementSchema = new mongoose.Schema({
   desctription: {
     type: String,
   },
+  activeStatus: {
+    type: Boolean,
+  },
   images: {
     type: [String]
   },

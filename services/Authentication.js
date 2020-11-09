@@ -54,10 +54,11 @@ const checkPermission = (resource, permission) => {// check logged user have giv
           
           const roles = Role.findOne({ title: decodedToken.role })
           .then(roles => {
-            const data = roles.privileges
-            .filter(obj => obj.resource === resource)[0].permissions;
+            const resources = roles.privileges
+            .filter(obj => obj.resource === resource)
+            const data = resources[0].permissions;
               
-            if(data.length) {
+            if(data.length && resources.length) {
               data.forEach(element => {
                 if (element === permission) {
                   next();

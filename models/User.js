@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
-const bcript = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 const skillsSchema = new mongoose.Schema({
   category: String,
@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'basic',
+    default: 'Basic',
     ref: 'Role'
   },
   proPic: {//initial login & update
@@ -111,6 +111,9 @@ const userSchema = new mongoose.Schema({
   appliedJobs: {
     type: [appliedJobs],
     default: []
+  },
+  languages: {
+    type: [String]
   }
 
 }, {timestamps: true});
@@ -123,7 +126,7 @@ userSchema.pre('save', async function (next) {
   next();
 })
 
-userSchema.static.login = async function (email, password) {
+userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
   if (user) {
     const auth = await bcrypt.compare(password, user.password);

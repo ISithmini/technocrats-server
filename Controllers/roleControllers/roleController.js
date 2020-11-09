@@ -8,8 +8,8 @@ const getRole = async (req, res) => {
   try {
     const { role } = getJwtInfo(req);
     console.log(role);
-    const role = await Role.findOne({ title: role});
-    res.status(400).json(role);
+    const selectedRole = await Role.findOne({ title: role});
+    res.status(400).json(selectedRole);
   } catch (error) {
     res.status(400).json({ errors: { message: "something went wrong" }});
   }

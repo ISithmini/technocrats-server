@@ -1,7 +1,7 @@
 const errorHandler = (err) => {
-  console.log(err.message);
+  console.log(err.code, err.message);
 
-  let errors = { name: '', email: '', password: ''};
+  let errors = { name: '', email: '', contactNo: '', password: '', locaton: ''};
 
   //incorrect email
   if(err.message === 'incorrect email') {
@@ -13,8 +13,12 @@ const errorHandler = (err) => {
   }
 
   //duplicate error code
-  if (err.code == 11000 || err.code == 'E11000') {
-    errors.email = '*This email is already registered'
+  if (err.code == 11000) {
+    if(err.message.includes('email')) {
+      errors.email = 'Entered email address is already registered'
+    } else if (err.message.includes('contactNo')) {
+      errors.contactNo = 'Contact number is already registered'
+    }
   }
 
   //validation errors
@@ -24,7 +28,7 @@ const errorHandler = (err) => {
       errors[properties.path] = properties.message;
     })
   }
-
+ 
   if (err.message.includes('Validation failed')) {
     Object.values(err.errors).forEach( ({properties}) => {
       //console.log(properties);

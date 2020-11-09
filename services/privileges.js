@@ -16,5 +16,8 @@ export const Privileges = {
   role: {
     createRole: 'createRole',
     editRole: 'editRole',
+  },
+  dashboard: {
+    dashboadAccess: 'dashboardAccess'
   }
 }

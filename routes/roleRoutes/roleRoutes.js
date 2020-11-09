@@ -1,9 +1,10 @@
 const express = require('express');
 const roleControllers = require('../../Controllers/roleControllers/roleController');
+const { basicAuth } = require('../../services/Authentication');
 const router = express.Router();
 
 
-router.get('/getroles', () => {})//get all roles /////////////////////////////
+router.get('/getroles', basicAuth,() => {})//get all roles /////////////////////////////
 
 router.get('/getarole/:rolename', roleControllers.getRole)// get a role //////////////////////
 

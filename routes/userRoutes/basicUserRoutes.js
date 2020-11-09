@@ -8,9 +8,11 @@ router.get('/hello', checkPermission('user', 'verifyUser') ,(req, res) => {
     res.status(201).json('hello')
 })
 
-router.post('/signup', basicUserControllers.createAccount); //create account
+router.post('/signup',basicUserControllers.createAccount); //create account
 
 router.post('/login', basicUserControllers.loginAccount); //login
+
+router.get('/logout', basicUserControllers.logoutAccount); //logout
 
 router.patch('/editaccount', ()=>{}); //edit account
 
@@ -18,7 +20,7 @@ router.patch('/editpropic', ()=>{}); //edit propic
 
 router.patch('/changepassword', () => {});//change password
 
-router.patch('/saveadd', () =>{})//save a ad
+router.patch('/savead', () =>{})//save a ad
 
 router.get('/savedads', ()=>{})//get saved ads
 

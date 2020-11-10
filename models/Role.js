@@ -1,12 +1,5 @@
 const mongoose = require('mongoose');
 
-const privilegeSchema = mongoose.Schema({
-  resource: {
-    type: String,
-  },
-  permissions: [String]
-})
-
 const roleSchema = mongoose.Schema({
   title: {
     type: String,
@@ -14,8 +7,11 @@ const roleSchema = mongoose.Schema({
     unique: true,
     trim: true,
   },
-  privileges: [privilegeSchema]
-});
+  permissions: {
+    type: [String],
+    ref: 'Permission'
+  }
+})
 
 const Role = mongoose.model('Role', roleSchema);
 module.exports = Role;

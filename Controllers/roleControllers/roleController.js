@@ -8,7 +8,7 @@ const getRole = async (req, res) => {
   try {
     const { role } = getJwtInfo(req);
     console.log(role);
-    const selectedRole = await Role.findOne({ title: role});
+    const selectedRole = await Role.findOne({ title: role });
     res.status(400).json(selectedRole);
   } catch (error) {
     res.status(400).json({ errors: { message: "something went wrong" }});
@@ -24,34 +24,29 @@ const createRole = (req, res) => {
 
   const sampleRole = {
     title: role,
-    privileges: []
+    permissions: []
   }
 
   const createdRole = Role.create(sampleRole)
   .then(result => {
-    res.status(201).json(createdRole);
+    res.status(201).json(result);
   }).catch(err => {
     errors = roleErrorHandler(err);
     res.status(400).json({ errors })
   })
 }
 
-/////////////////////////////////// ADD A RESOURCE /////////////////////////////////////////
+/////////////////////////////////// ADD A PERMISSION /////////////////////////////////////////
 
-const addResourceToRole = async (req, res) => {
+const addPermissionToRole = async (req, res) => {
 
-  const { role, resource } = req.body;
-
-  const sampleResource = {
-    resource: resource,
-    permissions: []
-  }
+  const { role, code } = req.body;
 
   try {
     const editedRole = await Role.updateOne(
       { title: role },
       { $addToSet: {
-        privileges: sampleResource
+        permissions: code
       } }
     )
     res.status(204).json(editedRole);
@@ -61,16 +56,16 @@ const addResourceToRole = async (req, res) => {
 
 }
 
-////////////////////////////////// REMOVE A RESOURCE ////////////////////////////////////////
+////////////////////////////////// REMOVE A PERMISSION ////////////////////////////////////////
 
-const removeResourceFromRole = async (req, res) => {
-  const { role, resource } = req.body;
+const removePermissionFromRole = async (req, res) => {
+  const { role, code } = req.body;
 
   try {
     const editedRole = await Role.updateOne(
       { title: role },
       { $pull: {
-        privileges: { resource: resource }
+        permissions: code
       } }
     )
     res.status(204).json(editedRole);
@@ -79,42 +74,6 @@ const removeResourceFromRole = async (req, res) => {
   }
 }
 
-
-////////////////////////////////// ADD A PERMISSION /////////////////////////////////////////
-
-const addPermissionToRole = async (req, res) => {
-  try {
-    const { role, resource, permission } = req.body;
-    const updatedRoles = await Role.updateOne(
-      { title: role, "privileges.resource": resource },
-      { $addToSet: { 
-        "privileges.$.permissions": permission
-      } },
-    );
-    res.status(204).json(updatedRoles);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
-/////////////////////////////////// REMOVE A PERMISSION ////////////////////////////////////
-
-const removePermissinFromRole = async (req, res) => {
-  try {
-    const { role, resource, permission } = req.body;
-    let updatedRoles = await Role.updateOne(
-      { title: role, "privileges.resource": resource },
-      { $pull : {
-        "privileges.$.permissions": permission
-      } }
-    );
-    res.status(204).json(updatedRoles);
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ errors: {message: 'Somethig went wrong!'} })
-  }
-}
 
 // const createAdmin =  async () => {
 //   const created = await Role.create(sampleRole);
@@ -165,10 +124,8 @@ const removePermissinFromRole = async (req, res) => {
 module.exports = {
   getRole,
   createRole,
-  addResourceToRole,
-  removeResourceFromRole,
+  removePermissionFromRole,
   addPermissionToRole,
-  removePermissinFromRole,
   //createAdmin
 }
 

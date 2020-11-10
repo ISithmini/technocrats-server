@@ -39,44 +39,40 @@ const basicAuth = (req, res, next) => {//middleware to check login status
   }
 }
 
-const checkPermission = (resource, permission) => {// check logged user have given permission of resource 
+const checkPermission = (code) => {// check logged user have given permission of resource 
 
   return (req, res, next) => {
     
     const token = req.cookies.regdata;
-    let flag = true;
+    let flag = false;
     
     if (token) {
+
       jwt.verify(token, secret, (err, decodedToken) => {
         if (err) {
           res.status(401).json({ error: 'Unauthorized access' })
         } else {
-          
-          const roles = Role.findOne({ title: decodedToken.role })
-          .then(roles => {
-            const resources = roles.privileges
-            .filter(obj => obj.resource === resource)
-            const data = resources[0].permissions;
-              
-            if(data.length && resources.length) {
-              data.forEach(element => {
-                if (element === permission) {
-                  next();
-                  flag = false;
-                }
-              });
-             if( flag )
-              res.status(401).json({ error: 'Unauthorized access' })
-            } else {
-              res.status(401).json({ error: 'Unauthorized access' })
-            }
-            }).catch(err => res.status(401).json({ error: 'Unauthorized access' }))
+          const role = Role.findOne({ title: decodedToken.role.title })
+            .then(resultRole => {
+              if (resultRole.permissions.length ) {
+                resultRole.permissions.forEach(permission => {
+                  if ( permission === code ) {
+                    flag = true;
+                    next();
+                  }
+                }); 
+                if (!flag)
+                  res.status(401).json({ error: 'Unauthorized access' });
+              } else {
+                res.status(401).json({ error: 'Unauthorized access' });
+              }
+            });
+          }
+        })
 
-        }
-      })
-    } else {
-      res.status(401).json({ error: 'Unauthorized access' })
-    }
+       } else {
+        res.status(401).json({ error: 'Unauthorized access' })
+      }
     
   }
 

@@ -3,7 +3,7 @@ const router = express.Router();
 const basicUserControllers = require('../../Controllers/userControllers/basicUserControllers');
 const { checkPermission } = require('../../services/Authentication');
 
-router.get('/hello', checkPermission('user', 'verifyUser') ,(req, res) => {
+router.get('/hello' ,(req, res) => {
   
     res.status(201).json('hello')
 })

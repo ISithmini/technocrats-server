@@ -4,7 +4,7 @@ const { basicAuth, checkPermission } = require('../../services/Authentication');
 const router = express.Router();
 
 
-router.get('/getroles', basicAuth,() => {})//get all roles /////////////////////////////
+router.get('/getroles', checkPermission('P0103'), roleControllers.getAllRoles)//get all roles /////////////////////////////
 
 router.get('/getarole/:rolename', roleControllers.getRole)// get a role //////////////////////
 
@@ -12,6 +12,6 @@ router.post('/add_role', checkPermission('P0101'), roleControllers.createRole)//
 
 router.patch('/add_permission_to_role', checkPermission('P0102'), roleControllers.addPermissionToRole)// add a permission to a role //////////////////
 
-router.patch('/remove_permission_from_role', roleControllers.removePermissionFromRole)// remove a permission from role///
+router.patch('/remove_permission_from_role',checkPermission('P0104'), roleControllers.removePermissionFromRole)// remove a permission from role///
 
 module.exports = router;

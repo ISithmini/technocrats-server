@@ -1,6 +1,6 @@
 const Permission = require("../../models/Permission");
 
-const getPermissions = async (req, res) => { 
+const getAllPermissions = async (req, res) => { 
   try {
     const permissions = await Permission.find();
     res.status(200).json({ permissions });
@@ -24,7 +24,7 @@ const createPermission = async (req, res) => {
 //////////////////////////////// DELETE PERMISSION /////////////////////////////////////////////////
 
 const deletePermission = async (req, res) => {
-  const { code } = req.body;
+  const { code } = req.params;
  try {
     const deletedPermission = await Permission.findOneAndDelete({ code: code });
     res.status(200).json({ deletedPermission });
@@ -51,7 +51,7 @@ const editPermission = async (req, res) => {
 }
 
 module.exports = {
-  getPermissions,
+  getAllPermissions,
   createPermission,
   editPermission,
   deletePermission

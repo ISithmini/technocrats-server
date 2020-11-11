@@ -22,7 +22,7 @@ const createAccount = (req, res) => {
     location,
     contactNo, 
    }).then( async (result) => {
-     const role = await Role.findOne({ title: result.role })
+    const role = await Role.findOne({ title: result.role })
     const token = createJwt( result._id, result.name, role );
     res.cookie('regdata', token, { maxAge: 60*60*24*1000 });
     res.status(201).json({ token })

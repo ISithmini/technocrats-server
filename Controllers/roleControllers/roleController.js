@@ -2,6 +2,18 @@ const Role = require('../../models/Role');
 const { getJwtInfo } = require('../../services/Authentication');
 const roleErrorHandler = require('../../services/Error/roleErrorHandler');
 
+//////////////////////////////////// GET ALL ROLES /////////////////////////////////////////
+
+const getAllRoles = async (req, res) => {
+  try {
+    const roles = await Role.find();
+    res.status(200).json({ roles });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
 //////////////////////////////////// GET A ROLE ////////////////////////////////////////////
 
 const getRole = async (req, res) => {
@@ -9,7 +21,7 @@ const getRole = async (req, res) => {
     const { role } = getJwtInfo(req);
     console.log(role);
     const selectedRole = await Role.findOne({ title: role });
-    res.status(400).json(selectedRole);
+    res.status(200).json(selectedRole);
   } catch (error) {
     res.status(400).json({ errors: { message: "something went wrong" }});
   }
@@ -60,20 +72,23 @@ const addPermissionToRole = async (req, res) => {
 
 const removePermissionFromRole = async (req, res) => {
   const { role, code } = req.body;
-
-  try {
-    const editedRole = await Role.updateOne(
-      { title: role },
-      { $pull: {
-        permissions: code
-      } }
-    )
-    res.status(204).json(editedRole);
-  } catch (error) {
-    console.log(error);
-  }
+  
+    if ( role !== 'Admin' ) {
+      try {
+        const editedRole = await Role.updateOne(
+          { title: role },
+          { $pull: {
+            permissions: code
+          } }
+        )
+        res.status(204).json(editedRole);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      res.status(401).json({ error: "Unauthorized access!" })
+    }
 }
-
 
 // const createAdmin =  async () => {
 //   const created = await Role.create(sampleRole);
@@ -122,6 +137,7 @@ const removePermissionFromRole = async (req, res) => {
 
 
 module.exports = {
+  getAllRoles,
   getRole,
   createRole,
   removePermissionFromRole,

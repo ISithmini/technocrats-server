@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 
 const roleSchema = mongoose.Schema({
   title: {
@@ -10,6 +11,19 @@ const roleSchema = mongoose.Schema({
   permissions: {
     type: [String],
     ref: 'Permission'
+  }
+})
+
+roleSchema.pre('remove', async function (next) {
+  try {
+    const users = await User.updateMany(
+      { role: this.title },
+      { $set: { role: "Basic" } }
+    )
+    //console.log('trigger working');
+    next();
+  } catch (error) {
+    console.log('No users with the deleted role'); 
   }
 })
 

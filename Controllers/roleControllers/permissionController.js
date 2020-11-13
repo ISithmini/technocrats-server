@@ -2,7 +2,7 @@ const Permission = require("../../models/Permission");
 
 const getAllPermissions = async (req, res) => { 
   try {
-    const permissions = await Permission.find();
+    const permissions = await Permission.find().sort( { code : 1 } );
     res.status(200).json({ permissions });
   } catch (err) {
     console.log(err);

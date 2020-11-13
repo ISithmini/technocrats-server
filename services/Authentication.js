@@ -78,9 +78,39 @@ const checkPermission = (code) => {// check logged user have given permission of
 
 }
 
+const checkAccess = (code) => {// check logged user have given permission of resource 
+
+  return (req, res) => {
+    
+    const token = req.cookies.regdata;
+    let flag = false;
+    
+    if (token) {
+
+      jwt.verify(token, secret, (err, decodedToken) => {
+        if (!err) {
+          const role = Role.findOne({ title: decodedToken.role.title })
+            .then(resultRole => {
+              if (resultRole.permissions.length ) {
+                resultRole.permissions.forEach(permission => {
+                  if ( permission === code ) {
+                    flag = true;
+                  }
+                }); 
+              }
+            });
+          }
+        })
+    }
+    return flag;
+  }
+
+}
+
 module.exports = {
   createJwt,
   getJwtInfo,
   basicAuth,
-  checkPermission
+  checkPermission,
+  checkAccess
 }

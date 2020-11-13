@@ -48,6 +48,22 @@ const createRole = (req, res) => {
   })
 }
 
+/////////////////////////////////// DELETE ROLE //////////////////////////////////////////////
+
+const deleteRole = async (req, res) => {
+  const { role } = req.params;
+  try {
+    if( role === 'Admin' && role === 'Basic' && role === 'Moderator' )
+      throw Error('This role cannot be deleted!')
+    const deletedRole = await Role.findOne({ title: role });
+    deletedRole.remove();
+    res.status(200).json({ deletedRole });
+  } catch(err) {
+    res.status(404).json({ error: "Role not found", err: err.message })
+  }
+
+}
+
 /////////////////////////////////// ADD A PERMISSION /////////////////////////////////////////
 
 const addPermissionToRole = async (req, res) => {
@@ -142,6 +158,7 @@ module.exports = {
   createRole,
   removePermissionFromRole,
   addPermissionToRole,
+  deleteRole
   //createAdmin
 }
 

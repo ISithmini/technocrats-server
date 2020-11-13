@@ -12,6 +12,8 @@ router.post('/add_role', checkPermission('P0101'), roleControllers.createRole)//
 
 router.patch('/add_permission_to_role', checkPermission('P0102'), roleControllers.addPermissionToRole)// add a permission to a role //////////////////
 
-router.patch('/remove_permission_from_role',checkPermission('P0104'), roleControllers.removePermissionFromRole)// remove a permission from role///
+router.patch('/remove_permission_from_role', checkPermission('P0102'), roleControllers.removePermissionFromRole)// remove a permission from role///
+
+router.delete('/delete_role/:role', checkPermission('P0106'), roleControllers.deleteRole)// 
 
 module.exports = router;

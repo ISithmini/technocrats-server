@@ -1,7 +1,13 @@
-P0001  Dashboard  Allow to access Dashboard
+P0001  Dashboard  Access Dashboard
 
 
-P0101  Roles  Allow to create User Roles
-P0102  Roles  Allow to assign Permisstions to Roles
-P0103  Roles  Allow to access Roles
-P0104  Roles  Allow to remove Permisstions from User Roles
+P0101  Roles  Create User Roles
+P0102  Roles  Assign Permisstions to Roles
+P0103  Roles  Access Roles and Permisstions
+P0105  Roles  Assign Roles to Users
+P0106  Roles  Delete User Roles
+
+
+P0201  User  Enable, Disable and change verifyStatus of Users
+P0202  User  Delete a User
+

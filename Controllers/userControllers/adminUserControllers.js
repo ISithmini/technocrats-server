@@ -14,11 +14,11 @@ const findAUser = async (req, res) => {
 
     if (foundUser) {
       if (foundUser.email) {
-        const { _id, name, email, contactNo, role, isDissable, verifyStatus } = foundUser;
-        res.status(200).json({ _id, name, email, contactNo, role, isDissable, verifyStatus });
+        const { _id, name, email, contactNo, role, isDissable, verifyStatus, createdAt } = foundUser;
+        res.status(200).json({ _id, name, email, contactNo, role, isDissable, verifyStatus, createdAt: createdAt });
       } else {
-        const { _id, name, contactNo, role, isDissable, verifyStatus } = foundUser;
-        res.status(200).json({ _id, name, email: '', contactNo, role, isDissable, verifyStatus });
+        const { _id, name, contactNo, role, isDissable, verifyStatus, createdAt } = foundUser;
+        res.status(200).json({ _id, name, email: '', contactNo, role, isDissable, verifyStatus, createdAt: createdAt });
       }
     } else {
       res.status(404).json({ error: 'No user Found!' });

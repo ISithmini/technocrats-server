@@ -19,8 +19,8 @@ const jobSchema = new mongoose.Schema({
     required: true
   },
   category: {
-    type: String,
-    required: true
+    type: mongoose.Types.ObjectId,
+    required: 'Category'
   },
   description: {
     type: String,

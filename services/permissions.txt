@@ -11,3 +11,6 @@ P0106  Roles  Delete User Roles
 P0201  User  Enable, Disable and change verifyStatus of Users
 P0202  User  Delete a User
 
+
+P0301  Category  Manage Categories and Skills
+

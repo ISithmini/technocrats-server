@@ -18,12 +18,14 @@ const userRoutes = require('./routes/userRoutes/basicUserRoutes');
 const roleRoutes = require('./routes/roleRoutes/roleRoutes');
 const permissionRoutes = require('./routes/roleRoutes/permissionRoutes');
 const adminControlledUserRoutes = require('./routes/userRoutes/adminUserRoutes');
+const categoryRoutes = require('./routes/categoryRoutes/categoryRoutes')
 //const { createAdmin } = require('./Controllers/roleControllers/roleController');
 
 app.use('/user', userRoutes);
 app.use('/adm_user', adminControlledUserRoutes);
 app.use('/role', roleRoutes);
 app.use('/permission', permissionRoutes);
+app.use('/category', categoryRoutes);
 
 
 

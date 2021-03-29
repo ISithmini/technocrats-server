@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const dbURI = "mongodb://127.0.0.1:27017/microjobDB";
+//const dbURI = "mongodb://127.0.0.1:27017/microjobDB";
+const dbURI = "mongodb://nipun_aluthge:Mon45GH78e@cluster0-shard-00-00.mdvbb.mongodb.net:27017,cluster0-shard-00-01.mdvbb.mongodb.net:27017,cluster0-shard-00-02.mdvbb.mongodb.net:27017/microjobDB?ssl=true&replicaSet=atlas-o59h6q-shard-0&authSource=admin&retryWrites=true&w=majority"
 const app = express();
 
 app.use(express.json());

@@ -33,6 +33,7 @@ const deleteCategory =  async (req, res) => {
   try {
     const category = await Category.findOne({ _id: req.query._id });
     category.remove();
+    console.log(category);
     res.status(200).json({ category });
   } catch (err) {
     console.log(err);

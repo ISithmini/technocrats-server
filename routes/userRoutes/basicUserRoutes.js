@@ -14,6 +14,8 @@ router.post('/login', basicUserControllers.loginAccount); //login
 
 router.get('/logout', basicUserControllers.logoutAccount); //logout
 
+router.get('/basic-details', basicUserControllers.getUserBasicDetails); //get basic user details
+
 router.patch('/editaccount', ()=>{}); //edit account
 
 router.patch('/editpropic', ()=>{}); //edit propic

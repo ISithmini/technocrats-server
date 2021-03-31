@@ -56,8 +56,20 @@ const logoutAccount = async (req, res) => {
   console.log("logged out");
 }
 
+///////////////////////////////////// GET BASIC DETAILS /////////////////////////////////////////////////////////
+
+const getUserBasicDetails = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.query._id });
+    res.status(200).json({user});
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   createAccount,
   loginAccount,
-  logoutAccount
+  logoutAccount,
+  getUserBasicDetails
 }

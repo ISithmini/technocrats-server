@@ -14,15 +14,17 @@ router.post('/login', basicUserControllers.loginAccount); //login
 
 router.get('/logout', basicUserControllers.logoutAccount); //logout
 
-router.patch('/editaccount', ()=>{}); //edit account
+router.get('/basic-details', basicUserControllers.getUserBasicDetails); //GetUserDetails
+
+router.get('/saved-posts', basicUserControllers.getSavedPosts); //GetUserDetails
+
+router.patch('/editaccount', basicUserControllers.editProfile); //edit account
 
 router.patch('/editpropic', ()=>{}); //edit propic
 
 router.patch('/changepassword', () => {});//change password
 
 router.patch('/savead', () =>{})//save a ad
-
-router.get('/savedads', ()=>{})//get saved ads
 
 
 module.exports = router;

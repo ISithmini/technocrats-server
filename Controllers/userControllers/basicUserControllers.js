@@ -56,8 +56,54 @@ const logoutAccount = async (req, res) => {
   console.log("logged out");
 }
 
+const getUserBasicDetails = async (req, res) => {
+    try{
+        const user = await User.findOne({ _id: req.query._id});
+        res.status(200).json({user});
+    } catch (error){
+        console.log(error);
+    }  
+}
+
+const getSavedPosts = async (req, res) => {
+    try{
+        console.log(req.query);
+        const user = await User.findOne({ _id: req.query._id});
+        res.status(200).json({user});
+    } catch (error){
+        console.log(error);
+    }
+}
+
+const editProfile = async (req, res) => {
+    const {
+        name,
+        email,
+        location,
+        contactNo,
+    } = req.body
+    
+    try {
+        const editedUser = await User.editProfile({
+            name,
+            email,
+            location,
+            contactNo,
+        });
+
+        res.status(200).json({ editedUser });
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ err });
+    }
+}
+
+
 module.exports = {
   createAccount,
+  editProfile,
   loginAccount,
-  logoutAccount
+  logoutAccount,
+  getUserBasicDetails,
+  getSavedPosts
 }
